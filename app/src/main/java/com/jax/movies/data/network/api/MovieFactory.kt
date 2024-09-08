@@ -7,7 +7,12 @@ import okhttp3.Interceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class ApiFactory {
+object MovieFactory {
+
+    private const val BASE_URL = "https://api.kinopoisk.dev/"
+    private const val API_KEY_HEADER = "X-API-KEY"
+    private const val HEADER_ACCEPT_NAME = "Accept"
+    private const val HEADER_ACCEPT_VALUE = "application/json"
 
     private val okHttpClient = OkHttpClient.Builder()
         .addInterceptor(HttpLoggingInterceptor().apply {
@@ -28,12 +33,5 @@ class ApiFactory {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    val apiService: ApiService = retrofit.create(ApiService::class.java)
-
-    companion object {
-        private const val BASE_URL = "https://api.kinopoisk.dev/"
-        private const val API_KEY_HEADER = "X-API-KEY"
-        private const val HEADER_ACCEPT_NAME = "Accept"
-        private const val HEADER_ACCEPT_VALUE = "application/json"
-    }
+    val movieService: MovieService = retrofit.create(MovieService::class.java)
 }

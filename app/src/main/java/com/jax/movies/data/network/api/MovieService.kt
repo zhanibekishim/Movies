@@ -4,12 +4,15 @@ import com.jax.movies.data.network.model.MovieResponseDto
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface ApiService {
+interface MovieService {
 
-    @GET("v1.4/movie")
+    @GET("v1.4/movie?sortField=&sortType=1&rating.imdb=7-10")
     suspend fun getMovies(
         @Query("page") page: Int,
-        @Query("limit") limit: Int
+        @Query("limit") limit: Int = DEFAULT_LIMIT
     ): MovieResponseDto
 
+    private companion object {
+        const val DEFAULT_LIMIT = 40
+    }
 }

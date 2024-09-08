@@ -39,6 +39,7 @@ android {
     }
     buildFeatures {
         buildConfig = true
+        viewBinding = true
     }
 }
 
@@ -58,8 +59,13 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.16.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
 
-    implementation ("com.google.dagger:dagger:2.43.2")
-    ksp ("com.google.dagger:dagger-compiler:2.43.2")
+    implementation ("com.google.dagger:dagger:2.48.1")
+    ksp ("com.google.dagger:dagger-compiler:2.48.1")
+
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.0")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
