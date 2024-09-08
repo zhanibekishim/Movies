@@ -14,8 +14,11 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        val key = property("apikey")?.toString() ?: error(
+            "You need to add api-key to gradle.properties"
+        )
+        buildConfigField("String", "MOVIE_API_KEY", "\"$key\"")
     }
 
     buildTypes {
@@ -34,12 +37,15 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        buildConfig = true
+    }
 }
 
 dependencies {
 
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
-    implementation("com.google.code.gson:gson:2.11.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
 
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
