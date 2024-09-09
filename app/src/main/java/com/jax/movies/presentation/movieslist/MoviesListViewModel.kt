@@ -7,19 +7,43 @@ import androidx.lifecycle.viewModelScope
 import com.jax.movies.domain.entity.Movie
 import com.jax.movies.domain.usecase.GetMoviesUseCase
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 import javax.inject.Inject
 
 class MoviesListViewModel @Inject constructor(
     private val getMoviesUseCase: GetMoviesUseCase
 ) : ViewModel() {
 
-    private val _movies = MutableLiveData<List<Movie>>()
-    val movies: LiveData<List<Movie>>
-        get() = _movies
+    private val _state = MutableLiveData<MoviesScreenState>()
+    val state: LiveData<MoviesScreenState>
+        get() = _state
 
-    fun loadMovies(page:Int){
+    private var page = 1
+
+    init {
+        loadMovies()
+    }
+
+    fun loadMovies() {
+        val currentState = _state.value
+        if(currentState is MoviesScreenState.Loading) return
         viewModelScope.launch {
-            _movies.value = getMoviesUseCase(page) ?: emptyList()
+            try {
+                val oldMovies = (_state.value as? MoviesScreenState.MoviesList)?.movies ?: emptyList()
+                _state.value = MoviesScreenState.Loading(true)
+                val newMovies = getMoviesUseCase(page++)
+                val updatedMovies = oldMovies + newMovies
+                _state.value = MoviesScreenState.MoviesList(updatedMovies)
+            } catch (e: Exception) {
+                if (e is HttpException) {
+                    _state.value = MoviesScreenState.Error("HTTP Error: ${e.code()} ${e.message()}")
+                } else {
+                    _state.value = MoviesScreenState.Error(e.toString())
+                }
+
+            } finally {
+                _state.value = MoviesScreenState.Loading(false)
+            }
         }
     }
 }
