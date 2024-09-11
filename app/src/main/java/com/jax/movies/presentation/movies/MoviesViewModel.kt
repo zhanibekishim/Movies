@@ -1,16 +1,15 @@
-package com.jax.movies.presentation.movieslist
+package com.jax.movies.presentation.movies
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jax.movies.domain.entity.Movie
 import com.jax.movies.domain.usecase.GetMoviesUseCase
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import javax.inject.Inject
 
-class MoviesListViewModel @Inject constructor(
+class MoviesViewModel @Inject constructor(
     private val getMoviesUseCase: GetMoviesUseCase
 ) : ViewModel() {
 

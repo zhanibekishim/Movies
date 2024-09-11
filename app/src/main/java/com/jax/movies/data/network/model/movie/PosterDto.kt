@@ -1,4 +1,4 @@
-package com.jax.movies.data.network.model
+package com.jax.movies.data.network.model.movie
 
 import com.google.gson.annotations.SerializedName
 

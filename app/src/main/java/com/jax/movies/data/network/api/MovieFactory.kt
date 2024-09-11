@@ -11,7 +11,7 @@ object MovieFactory {
 
     private const val BASE_URL = "https://api.kinopoisk.dev/"
     private const val API_KEY_HEADER = "X-API-KEY"
-    private const val HEADER_ACCEPT_NAME = "Accept"
+    private const val HEADER_ACCEPT_NAME = "accept"
     private const val HEADER_ACCEPT_VALUE = "application/json"
 
     private val okHttpClient = OkHttpClient.Builder()

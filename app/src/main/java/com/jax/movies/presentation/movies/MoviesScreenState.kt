@@ -1,6 +1,6 @@
-package com.jax.movies.presentation.movieslist
+package com.jax.movies.presentation.movies
 
-import com.jax.movies.domain.entity.Movie
+import com.jax.movies.domain.entity.movie.Movie
 
 sealed class MoviesScreenState {
 

@@ -1,4 +1,4 @@
-package com.jax.movies.presentation.movieslist
+package com.jax.movies.presentation.movies
 
 import android.os.Bundle
 import android.util.Log
@@ -7,20 +7,20 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.jax.movies.R
 import com.jax.movies.databinding.ActivityMoviesListBinding
 import com.jax.movies.presentation.MovieApp
 import com.jax.movies.presentation.ViewModelFactory
-import com.jax.movies.presentation.movieslist.adapter.MovieAdapter
+import com.jax.movies.presentation.movieDetail.MovieDetailActivity
+import com.jax.movies.presentation.movies.adapter.MovieAdapter
 import javax.inject.Inject
 
-class MoviesListActivity : AppCompatActivity() {
+class MoviesActivity : AppCompatActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
     private val viewModel by lazy {
-        ViewModelProvider(this, viewModelFactory)[MoviesListViewModel::class.java]
+        ViewModelProvider(this, viewModelFactory)[MoviesViewModel::class.java]
     }
     private val binding by lazy {
         ActivityMoviesListBinding.inflate(layoutInflater)
@@ -36,11 +36,12 @@ class MoviesListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        setUpViews()
+        bindViews()
+        setUpClickListeners()
         observeViewModel()
     }
 
-    private fun setUpViews() {
+    private fun bindViews() {
         with(binding.rvMovies) {
             movieAdapter = MovieAdapter()
             adapter = movieAdapter
@@ -50,8 +51,15 @@ class MoviesListActivity : AppCompatActivity() {
                 MovieAdapter.maxRecycledView
             )
         }
+    }
+    private fun setUpClickListeners(){
         movieAdapter.needToDownloadMovies = {
             viewModel.loadMovies()
+        }
+        movieAdapter.onMovieClickListener = {movie->
+            MovieDetailActivity.newIntent(this,movie).apply {
+                startActivity(this)
+            }
         }
     }
 
@@ -59,7 +67,7 @@ class MoviesListActivity : AppCompatActivity() {
         viewModel.state.observe(this) {
             when (it) {
                 is MoviesScreenState.Error -> {
-                    Log.d(LOG_TAG, it.errorMsg)
+                    Log.d(LOG_TAG,it.errorMsg)
                     Toast.makeText(this, ERROR_MSG, Toast.LENGTH_SHORT).show()
                 }
 
@@ -68,7 +76,6 @@ class MoviesListActivity : AppCompatActivity() {
                 }
 
                 is MoviesScreenState.MoviesList -> {
-                    Log.d(LOG_TAG, it.movies.toString())
                     movieAdapter.submitList(it.movies)
                 }
             }

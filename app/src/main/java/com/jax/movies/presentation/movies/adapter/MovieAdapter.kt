@@ -1,16 +1,16 @@
-package com.jax.movies.presentation.movieslist.adapter
+package com.jax.movies.presentation.movies.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.jax.movies.databinding.MovieCardBinding
-import com.jax.movies.domain.entity.Movie
+import com.jax.movies.domain.entity.movie.Movie
 
 
 class MovieAdapter : ListAdapter<Movie, MovieViewHolder>(MovieDiffCallBack()) {
 
     var needToDownloadMovies: (() -> Unit)? = null
-
+    var onMovieClickListener: ((Movie) -> Unit)? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val binding = MovieCardBinding.inflate(
             LayoutInflater.from(parent.context),
@@ -25,6 +25,9 @@ class MovieAdapter : ListAdapter<Movie, MovieViewHolder>(MovieDiffCallBack()) {
         holder.bind(movie)
         if (position >= itemCount - 10) {
             needToDownloadMovies?.invoke()
+        }
+        holder.itemView.setOnClickListener {
+            onMovieClickListener?.invoke(movie)
         }
     }
 

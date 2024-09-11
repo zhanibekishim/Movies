@@ -1,10 +1,10 @@
-package com.jax.movies.presentation.movieslist.adapter
+package com.jax.movies.presentation.movies.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.jax.movies.R
 import com.jax.movies.databinding.MovieCardBinding
-import com.jax.movies.domain.entity.Movie
+import com.jax.movies.domain.entity.movie.Movie
 
 class MovieViewHolder(private val binding: MovieCardBinding) : RecyclerView.ViewHolder(binding.root) {
     fun bind(movie: Movie){

@@ -1,7 +1,8 @@
 package com.jax.movies.di
 
 import android.app.Application
-import com.jax.movies.presentation.movieslist.MoviesListActivity
+import com.jax.movies.presentation.movieDetail.MovieDetailActivity
+import com.jax.movies.presentation.movies.MoviesActivity
 import dagger.BindsInstance
 import dagger.Component
 
@@ -14,7 +15,8 @@ import dagger.Component
 )
 interface ApplicationComponent {
 
-    fun inject(moviesListActivity: MoviesListActivity)
+    fun inject(moviesActivity: MoviesActivity)
+    fun inject(movieDetailActivity: MovieDetailActivity)
 
     @Component.Factory
     interface Factory {

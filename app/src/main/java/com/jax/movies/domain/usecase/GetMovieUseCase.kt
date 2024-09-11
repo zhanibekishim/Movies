@@ -1,6 +1,6 @@
 package com.jax.movies.domain.usecase
 
-import com.jax.movies.domain.entity.Movie
+import com.jax.movies.domain.entity.movie.Movie
 import com.jax.movies.domain.repository.MovieRepository
 import javax.inject.Inject
 
